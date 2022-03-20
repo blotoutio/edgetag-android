@@ -256,10 +256,14 @@ class DeviceInfo(private val context: Context) {
 
   val userAgent: String
     get() {
-      val systemUa = System.getProperty("http.agent")
-      return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-        WebSettings.getDefaultUserAgent(context) + "__" + systemUa
-      } else WebView(context).settings.userAgentString + "__" + systemUa
+      try {
+        val systemUa = System.getProperty("http.agent")
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+          WebSettings.getDefaultUserAgent(context) + "__" + systemUa
+        } else WebView(context).settings.userAgentString + "__" + systemUa
+      }catch (e:java.lang.Exception){
+        return ""
+      }
     }
 
   @RequiresApi(Build.VERSION_CODES.M)
@@ -291,10 +295,7 @@ class DeviceInfo(private val context: Context) {
         DependencyInjectorImpl.getInstance().getSecureStorageService()
           .storeString(Constant.AD_ID, adId)
       }catch (e:Exception){
-
       }
     }
   }
-
-
 }

@@ -8,14 +8,12 @@ import com.edgetag.deviceinfo.device.DeviceInfo
 import com.edgetag.network.HostConfiguration
 import com.edgetag.network.RemoteApiClient
 import com.edgetag.network.RemoteApiDataSource
-import com.edgetag.network.RemoteApiService
 import com.edgetag.referral.InstallRefferal
 import com.edgetag.repository.EventRepository
 import com.edgetag.repository.ManifestRepository
 import com.edgetag.repository.data.ConfigurationDataManager
 import com.edgetag.repository.data.SharedPreferenceSecureVault
 import com.edgetag.repository.impl.DataManagerImpl
-import com.edgetag.util.Constant
 import com.edgetag.util.DateTimeUtils
 
 class DependencyInjectorImpl private constructor(
@@ -24,29 +22,32 @@ class DependencyInjectorImpl private constructor(
     hostConfiguration: HostConfiguration,
     eventDatabase: EventDatabase) : DependencyInjector {
 
-
-    private val mSecureStorageService = secureStorageService
-    private val mHostConfiguration = hostConfiguration
-    private val mEventDatabase = eventDatabase
-    private val mApplication = application
     var mReferrerDetails: ReferrerDetails? = null
-
-
 
     companion object {
         private const val TAG ="DependencyInjectorImpl"
         private lateinit var instance: DependencyInjectorImpl
         private var sessionID :Long = 0
         private lateinit var eventRepository :EventRepository
+        private lateinit var mSecureStorageService : SharedPreferenceSecureVault
+        private lateinit var  mHostConfiguration : HostConfiguration
+        private lateinit var mEventDatabase : EventDatabase
+        private lateinit var mApplication :Application
+
 
         @Synchronized
         fun init(
                 application: Application,
                 secureStorageService: SharedPreferenceSecureVault,
-                hostConfiguration: HostConfiguration
+                hostConfiguration: HostConfiguration,
+                eventDatabase: EventDatabase
         ) :Boolean{
+            mApplication = application
+            mHostConfiguration= hostConfiguration
+            mSecureStorageService=secureStorageService
+            mEventDatabase=eventDatabase
             try {
-                instance = DependencyInjectorImpl(application, secureStorageService, hostConfiguration, EventDatabase.invoke(application))
+                instance = DependencyInjectorImpl(application, secureStorageService, hostConfiguration, mEventDatabase)
             }catch (e:Exception){
                 Log.d(TAG,e.localizedMessage!!)
                 return false
@@ -104,7 +105,7 @@ class DependencyInjectorImpl private constructor(
             sessionID = DateTimeUtils().get13DigitNumberObjTimeStamp()
             eventRepository = EventRepository(mSecureStorageService)
             val activityLifeCycleCallback =
-                AnalyticsActivityLifecycleCallbacks(eventRepository, mSecureStorageService)
+                AnalyticsActivityLifecycleCallbacks()
             mApplication.registerActivityLifecycleCallbacks(activityLifeCycleCallback)
             eventRepository.publishEvent()
             InstallRefferal().startClient(mApplication)
