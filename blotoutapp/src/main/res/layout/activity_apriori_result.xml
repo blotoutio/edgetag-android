@@ -37,11 +37,6 @@
             tools:context="view.activities.AllFeedbacksActivity">
 
 
-            <com.github.mikephil.charting.charts.BarChart
-                android:id="@+id/apriori_data"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
             <com.wang.avi.AVLoadingIndicatorView
                 android:id="@+id/loading_view"
                 android:layout_width="50dp"

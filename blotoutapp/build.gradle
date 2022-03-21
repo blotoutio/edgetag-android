@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "com.edgetag.sampleapp"
-        minSdkVersion 21
+        minSdkVersion 24
         targetSdkVersion 30
         versionCode 2
         versionName "0.1.0"
@@ -22,10 +22,6 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-}
-
-lintOptions {
-    abortOnError false
 }
 
 allprojects {

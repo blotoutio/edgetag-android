@@ -2,6 +2,7 @@
 
 package com.edgetag.sampleapp.view.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.text.Spannable;
 import android.text.Spanned;
@@ -77,6 +78,7 @@ public class ProductListAdapter extends
         return viewHolder;
     }
 
+    @SuppressLint("RecyclerView")
     @Override
     public void onBindViewHolder(final VersionViewHolder holder,
                                  final int position) {
