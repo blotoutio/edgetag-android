@@ -18,8 +18,9 @@ class ManifestRepository(private val configurationDataManager: ConfigurationData
     suspend fun fetchManifestConfiguration() : Result<String>? {
             when (val result = configurationDataManager.downloadManifestConfiguration()) {
                 is Result.Success -> {
+                    val manifestResponseString = Gson().toJson(result.data)
                     DependencyInjectorImpl.getInstance().getSecureStorageService()
-                        .storeString(Gson().toJson(result.data), Constant.MANIFEST_DATA)
+                        .storeString(Constant.MANIFEST_DATA,manifestResponseString )
                     return result.data?.let { initManifestConfiguration(it) }
                 }
                 else -> {

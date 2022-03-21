@@ -2,8 +2,8 @@ package com.edgetag
 
 import android.util.Log
 import android.webkit.URLUtil
+import com.edgetag.model.ErrorCodes
 import com.edgetag.util.Constant
-import com.edgetag.util.Errors
 import java.lang.Exception
 
 class EdgeTagConfiguration {
@@ -18,9 +18,9 @@ class EdgeTagConfiguration {
 
   fun validateRequest(): Int {
     if (endPointUrl.isNullOrEmpty() || !URLUtil.isValidUrl(endPointUrl))
-      return Errors.ERROR_URL_NOT_PROPER
+      return ErrorCodes.ERROR_CODE_END_POINT_URL_NOT_PROPER
     save()
-    return Errors.ERROR_CODE_NO_ERROR
+    return ErrorCodes.ERROR_CODE_NO_ERROR
   }
 
   private fun save() {

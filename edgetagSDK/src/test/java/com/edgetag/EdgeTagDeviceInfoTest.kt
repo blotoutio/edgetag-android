@@ -19,11 +19,11 @@ import org.mockito.junit.MockitoJUnitRunner
 @RunWith(MockitoJUnitRunner::class)
 class EdgeTagDeviceInfoTest {
 
-    lateinit var context: Application
-    lateinit var deviceInfo: DeviceInfo
-    lateinit var windowManagerMock:WindowManager
-    lateinit var display: Display
-    lateinit var resources:Resources
+    private lateinit var context: Application
+    private lateinit var deviceInfo: DeviceInfo
+    private lateinit var windowManagerMock:WindowManager
+    private lateinit var display: Display
+    private lateinit var resources:Resources
 
     @Before
     fun setUp() {
@@ -65,7 +65,7 @@ class EdgeTagDeviceInfoTest {
 
     @Test
     fun testDeviceLocale() {
-        var config = Mockito.mock(Configuration::class.java)
+        val config = Mockito.mock(Configuration::class.java)
         Mockito.`when`(context.resources.configuration).thenReturn(config)
         Assert.assertNull(deviceInfo.deviceLocale)
     }

@@ -45,7 +45,7 @@ class RemoteApiDataSource(private val remoteApiService: RemoteApiService) {
 
   }
 
-  fun String.saveCookies() {
+   fun String.saveCookies()  {
     if (DependencyInjectorImpl.getInstance().getSecureStorageService()
         .fetchString(Constant.TAG_USER_ID).isEmpty()
     ) {

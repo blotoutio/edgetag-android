@@ -3,11 +3,11 @@ package com.edgetag
 import android.app.Application
 import android.content.Context
 import android.util.Log
+import com.edgetag.data.database.EventDatabase
 import com.edgetag.model.*
 import com.edgetag.network.HostConfiguration
 import com.edgetag.repository.EventRepository
 import com.edgetag.repository.impl.SharedPreferenceSecureVaultImpl
-import com.edgetag.util.Errors
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -38,11 +38,11 @@ open class EdgeTagInternal : EdgeTagInterface {
       DependencyInjectorImpl.init(
         application = application,
         secureStorageService = secureVault,
-        hostConfiguration = hostConfiguration
+        hostConfiguration = hostConfiguration, EventDatabase.invoke(application)
       )
       when (edgeTagConfiguration.validateRequest()) {
 
-        Errors.ERROR_URL_NOT_PROPER -> {
+        ErrorCodes.ERROR_CODE_END_POINT_URL_NOT_PROPER -> {
           completionHandler.onError(
             code = ErrorCodes.ERROR_CODE_END_POINT_URL_NOT_PROPER,
             msg = "End point url is invalid"
@@ -107,6 +107,7 @@ open class EdgeTagInternal : EdgeTagInterface {
         }
       } catch (e: Exception) {
         Log.e(TAG, e.toString())
+        completionHandler.onError(code = ErrorCodes.ERROR_CODE_CONSENT_ERROR,msg = e.localizedMessage)
       }
     }
   }
@@ -140,6 +141,7 @@ open class EdgeTagInternal : EdgeTagInterface {
         }
       } catch (e: Exception) {
         Log.e(TAG, e.toString())
+        completionHandler.onError(code = ErrorCodes.ERROR_CODE_TAG_ERROR,msg = e.localizedMessage)
       }
     }
   }
