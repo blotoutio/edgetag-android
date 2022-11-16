@@ -21,8 +21,8 @@ object Constant {
   const val EDGE_EVENTS_GET_KEY ="/keys"
 
   const val BOSDK_MAJOR_VERSION = 0
-  const val BOSDK_MINOR_VERSION = 4
-  const val BOSDK_PATCH_VERSION = 7
+  const val BOSDK_MINOR_VERSION = 5
+  const val BOSDK_PATCH_VERSION = 0
 
   val allowedUserKeys = arrayOf("email", "phone", "firstName","lastName","gender","dateOfBirth","country","state","city","zip")
 
