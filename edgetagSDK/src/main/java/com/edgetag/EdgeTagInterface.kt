@@ -44,4 +44,6 @@ interface EdgeTagInterface {
     fun isAdvertiserIdAvailable(
         onComplete: OnComplete?
     )
+
+    fun getUserID(onComplete: OnComplete?)
 }
