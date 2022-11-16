@@ -16,7 +16,6 @@ import com.edgetag.model.edgetag.Storage
 import com.edgetag.network.ApiDataProvider
 import com.edgetag.repository.data.SharedPreferenceSecureVault
 import com.edgetag.util.Constant
-import com.edgetag.util.DateTimeUtils
 import com.google.gson.Gson
 import retrofit2.Call
 
@@ -97,8 +96,6 @@ class EventRepository(private var secureStorage: SharedPreferenceSecureVault) {
             tagMetadata.userAgent = DeviceInfo(context).userAgent
             tagMetadata.eventName = tagName
             tagMetadata.data = tagInfo
-            tagMetadata.eventId = DateTimeUtils().generateEventId(tagName)
-            tagMetadata.timestamp = System.currentTimeMillis().toString()
             publishEvents(tagMetadata)
         } catch (e: Exception) {
             //Log.e(TAG, e.localizedMessage!!)

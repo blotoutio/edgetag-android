@@ -27,14 +27,6 @@ class EdgetagMetaData {
     @Expose
     var eventName: String? = null
 
-    @SerializedName("eventId")
-    @Expose
-    var eventId: String? = null
-
-    @SerializedName("timestamp")
-    @Expose
-    var timestamp: String? = null
-
     @SerializedName("data")
     @Expose
     var data: HashMap<String, Any>? = null

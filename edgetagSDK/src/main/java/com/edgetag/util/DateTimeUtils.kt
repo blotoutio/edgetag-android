@@ -18,11 +18,4 @@ class DateTimeUtils {
         val dateL = Date()
         return dateL.time
     }
-
-    fun generateEventId(eventName:String):String{
-        val time = Date().time
-        val base64Eventname = android.util.Base64.encodeToString(eventName.toByteArray(),android.util.Base64.NO_WRAP)
-        val uuid = UUID.randomUUID()
-        return "${base64Eventname}-${uuid}-${time}"
-    }
 }
