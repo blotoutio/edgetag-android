@@ -7,6 +7,7 @@ import com.edgetag.data.database.EventDatabase
 import com.edgetag.deviceinfo.device.DeviceInfo
 import com.edgetag.model.CompletionHandler
 import com.edgetag.model.ErrorCodes
+import com.edgetag.model.ErrorCodes.ERROR_CODE_GET_USER_ID_ERROR
 import com.edgetag.model.OnComplete
 import com.edgetag.model.Result
 import com.edgetag.model.edgetag.ManifestConfigurationResponse
@@ -362,6 +363,20 @@ open class EdgeTagInternal : EdgeTagInterface {
         }
         else {
             DeviceInfo(context).isLimitAdTrackingEnabled(onComplete)
+        }
+    }
+
+    override fun getUserID(onComplete: OnComplete?) {
+        if (onComplete ==null) {
+            throw Exception("Argument missing")
+        }
+        try {
+            onComplete.onSuccess(
+                DependencyInjectorImpl.getInstance().getSecureStorageService()
+                    .fetchString(Constant.TAG_USER_ID)
+            )
+        }catch (e:Exception){
+            onComplete.onError(code = ERROR_CODE_GET_USER_ID_ERROR,"Error while retrieving userID")
         }
     }
 }

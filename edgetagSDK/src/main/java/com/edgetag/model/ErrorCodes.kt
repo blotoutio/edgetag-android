@@ -20,6 +20,7 @@ object ErrorCodes {
     const val ERROR_CODE_DATA_MISSING_ERROR =15
     const val ERROR_CODE_JSON_PARSING_ERROR =16
     const val ERROR_CODE_GET_AD_ID_ERROR =17
+    const val ERROR_CODE_GET_USER_ID_ERROR =18
 
 
     const val ERROR_CODE_SDK_NOT_ENABLED_MSG = "SDK is not initialized"
