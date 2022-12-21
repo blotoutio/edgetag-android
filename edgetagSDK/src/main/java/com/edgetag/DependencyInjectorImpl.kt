@@ -116,7 +116,6 @@ class DependencyInjectorImpl private constructor(
 
     fun initialize(){
         try {
-            eventRepository.publishEvent()
             InstallRefferal().startClient(mApplication)
             DeviceInfo(mApplication).getAdvertisingId()
         }catch (e:Throwable){

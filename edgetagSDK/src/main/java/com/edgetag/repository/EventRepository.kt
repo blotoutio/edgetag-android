@@ -240,7 +240,7 @@ class EventRepository(private var secureStorage: SharedPreferenceSecureVault) {
     }
 
 
-    private fun pushEvents(event: EdgetagMetaData): Result<String> {
+    /*private fun pushEvents(event: EdgetagMetaData): Result<String> {
         return try {
             val eventEntity = EventEntity(Gson().toJson(event))
             EventDatabaseService().insertEvent(eventEntity)
@@ -253,7 +253,7 @@ class EventRepository(private var secureStorage: SharedPreferenceSecureVault) {
                 )
             )
         }
-    }
+    }*/
 
     private fun publishEvents(event: EdgetagMetaData): Result<String> {
         DependencyInjectorImpl.getInstance().getConfigurationManager()
@@ -426,10 +426,6 @@ class EventRepository(private var secureStorage: SharedPreferenceSecureVault) {
         return packageManager.getActivityInfo(
             this.componentName, PackageManager.GET_META_DATA
         ).loadLabel(packageManager).toString()
-    }
-
-    fun publishEvent() {
-        EventDatabaseService().getEvents()
     }
 
     private fun getConsentInfo():HashMap<String, Boolean>{

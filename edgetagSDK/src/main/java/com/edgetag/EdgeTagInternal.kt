@@ -100,21 +100,6 @@ open class EdgeTagInternal : EdgeTagInterface {
         }
     }
 
-    /*private fun validateDisableConsentCheck(disableConsentCheck: Boolean) {
-        if (disableConsentCheck) {
-            val consent = hashMapOf<String, Boolean>()
-            consent.put("all", true)
-            consent(consent, object : CompletionHandler {
-                override fun onSuccess() {
-                }
-
-                override fun onError(code: Int, msg: String) {
-                }
-
-            })
-        }
-    }*/
-
     @Synchronized
     override fun consent(
         consentInfo: HashMap<String, Boolean>,
