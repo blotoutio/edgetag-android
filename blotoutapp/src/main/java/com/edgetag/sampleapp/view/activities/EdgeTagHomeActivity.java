@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.edgetag.model.OnComplete;
+import com.edgetag.providers.blotoutcloud.BlotoutCloud;
 import com.edgetag.sampleapp.R;
 import com.edgetag.EdgeTag;
 import com.edgetag.EdgeTagConfiguration;
@@ -59,6 +60,7 @@ public class EdgeTagHomeActivity extends AppCompatActivity {
 
         EdgeTagConfiguration edgetagConfiguration = new EdgeTagConfiguration();
         edgetagConfiguration.setEndPointUrl("https://sdk-demo-t.edgetag.io");
+        edgetagConfiguration.getProviderInfo().put(new BlotoutCloud(),true);
 
         initPress = findViewById(R.id.init_button_press);
         toggleButton = findViewById(R.id.disableConsentCheckToggleButton);
