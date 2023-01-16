@@ -14,7 +14,7 @@ public class Money {
     private static final RoundingMode DEFAULT_ROUNDING = RoundingMode.HALF_EVEN;
 
     private BigDecimal amount;
-    private Currency currency;
+    private final Currency currency;
 
     Money(BigDecimal amount, Currency currency) {
         this(amount, currency, DEFAULT_ROUNDING);

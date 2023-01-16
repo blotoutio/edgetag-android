@@ -2,13 +2,14 @@ package com.edgetag
 
 import android.webkit.URLUtil
 import com.edgetag.model.ErrorCodes
+import com.edgetag.providers.blotoutcloud.ProviderInterface
 import com.edgetag.util.Constant
 
 class EdgeTagConfiguration {
 
-
   var endPointUrl: String? = null
   var disableConsentCheck:Boolean = true
+  var providerInfo:HashMap<ProviderInterface,Boolean> = hashMapOf()
 
   companion object {
     private const val TAG = "AnalyticsConfiguration"

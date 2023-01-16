@@ -6,12 +6,12 @@ plugins {
 }
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion 33
     buildToolsVersion "30.0.3"
 
     defaultConfig {
         minSdkVersion 21
-        targetSdkVersion 30
+        targetSdkVersion 33
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
     }
@@ -69,6 +69,7 @@ dependencies {
     implementation deps.androidx_appcompact
     implementation deps.google_material
     implementation 'com.google.android.gms:play-services-ads-identifier:17.0.0'
+    //implementation project(path: ':provider')
 
     androidTestImplementation deps.junit_test
     androidTestImplementation deps.espresso
@@ -88,6 +89,8 @@ dependencies {
 
     implementation deps.androidx_room_ktx
     kapt deps.androidx_room_compiler
+
+    implementation 'com.google.android.gms:play-services-appset:16.0.2'
 
 
     //test

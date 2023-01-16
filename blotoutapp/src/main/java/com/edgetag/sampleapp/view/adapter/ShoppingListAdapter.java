@@ -53,12 +53,12 @@ public class ShoppingListAdapter extends
 
     private static OnItemClickListener clickListener;
     private final OnStartDragListener mDragStartListener;
-    private ColorGenerator mColorGenerator = ColorGenerator.MATERIAL;
+    private final ColorGenerator mColorGenerator = ColorGenerator.MATERIAL;
     private IBuilder mDrawableBuilder;
     private TextDrawable drawable;
     private String ImageUrl;
     private List<Product> productList = new ArrayList<Product>();
-    private Context context;
+    private final Context context;
 
     public ShoppingListAdapter(Context context,
                                OnStartDragListener dragStartListener) {
@@ -85,7 +85,7 @@ public class ShoppingListAdapter extends
 
         String sellCostString = Money.rupees(
                 BigDecimal.valueOf(Long.valueOf(productList.get(position)
-                        .getSellMRP()))).toString()
+                        .getSellMRP())))
                 + "  ";
 
         String buyMRP = Money.rupees(
@@ -254,11 +254,11 @@ public class ShoppingListAdapter extends
 
     public void SetOnItemClickListener(
             final OnItemClickListener itemClickListener) {
-        this.clickListener = itemClickListener;
+        clickListener = itemClickListener;
     }
 
     public interface OnItemClickListener {
-        public void onItemClick(View view, int position);
+        void onItemClick(View view, int position);
     }
 
     /**

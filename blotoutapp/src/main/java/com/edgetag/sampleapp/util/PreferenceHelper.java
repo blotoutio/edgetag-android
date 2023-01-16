@@ -19,7 +19,7 @@ public class PreferenceHelper {
     // Handle Local Caching of data for responsiveness
     public static final String MY_CART_LIST_LOCAL = "MyCartItems";
     private static final String USER_LOGGED_IN = "isLoggedIn";
-    private static PreferenceHelper preferenceHelperInstance = new PreferenceHelper();
+    private static final PreferenceHelper preferenceHelperInstance = new PreferenceHelper();
 
     private PreferenceHelper() {
     }

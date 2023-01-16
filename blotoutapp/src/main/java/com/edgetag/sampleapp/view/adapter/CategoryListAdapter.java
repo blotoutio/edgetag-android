@@ -31,11 +31,11 @@ public class CategoryListAdapter extends
 
     public static List<ProductCategoryModel> categoryList = new ArrayList<ProductCategoryModel>();
     OnItemClickListener clickListener;
-    private ColorGenerator mColorGenerator = ColorGenerator.MATERIAL;
+    private final ColorGenerator mColorGenerator = ColorGenerator.MATERIAL;
     private IBuilder mDrawableBuilder;
     private TextDrawable drawable;
     private String ImageUrl;
-    private Context context;
+    private final Context context;
 
     public CategoryListAdapter(Context context) {
 
@@ -96,7 +96,7 @@ public class CategoryListAdapter extends
     }
 
     public interface OnItemClickListener {
-        public void onItemClick(View view, int position);
+        void onItemClick(View view, int position);
     }
 
     class VersionViewHolder extends RecyclerView.ViewHolder implements

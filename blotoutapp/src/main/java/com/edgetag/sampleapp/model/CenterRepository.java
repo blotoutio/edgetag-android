@@ -20,7 +20,7 @@ public class CenterRepository {
     private ArrayList<ProductCategoryModel> listOfCategory = new ArrayList<ProductCategoryModel>();
     private ConcurrentHashMap<String, ArrayList<Product>> mapOfProductsInCategory = new ConcurrentHashMap<String, ArrayList<Product>>();
     private List<Product> listOfProductsInShoppingList = Collections.synchronizedList(new ArrayList<Product>());
-    private List<Set<String>> listOfItemSetsForDataMining = new ArrayList<>();
+    private final List<Set<String>> listOfItemSetsForDataMining = new ArrayList<>();
 
     public static CenterRepository getCenterRepository() {
 

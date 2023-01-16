@@ -19,16 +19,17 @@ The `mapID` method allows you to map external services to Blotout ID.
 
 
 #### Example
+
 ```kotlin
-HashMap<String,Any> eventInfo = new HashMap<>();
-eventInfo.put("language","en");
+HashMap<String,Any> eventInfo = new HashMap<>()
+eventInfo.put("language","en")
 
 var data = MapIDData()
 data.externalID = "92j2jr230r-232j9j2342j3-jiji"
 data.provider = "sass"
 
-BlotoutAnalytics.INSTANCE.mapID(data, null);
-BlotoutAnalytics.INSTANCE.mapID(data, eventInfo);
+BlotoutAnalytics.INSTANCE.mapID(data, null)
+BlotoutAnalytics.INSTANCE.mapID(data, eventInfo)
 ```
 
 ## transaction
@@ -112,7 +113,7 @@ The `item` method allows you to record item in your system, like add to cart in 
 
 ```kotlin
 val itemData = Item(item_id= "123423423", item_currency= "EUR", item_price= 10.5, quantity= 2)
-BlotoutAnalytics.item(itemData,null);
+BlotoutAnalytics.item(itemData,null)
 
 ```
 
@@ -165,8 +166,8 @@ The `persona` method allows you to record persona in your system, like when user
 {% tab basic kotlin %}
 
 ```kotlin
-val persona_item = Persona ( persona_id= "3434343", persona_gender= "female", persona_age= 22 )
-BlotoutAnalytics.persona(persona_item,null);
+val persona_item = Persona(persona_id = "3434343", persona_gender = "female", persona_age = 22)
+BlotoutAnalytics.persona(persona_item, null)
 ```
 
 {% endtab %}

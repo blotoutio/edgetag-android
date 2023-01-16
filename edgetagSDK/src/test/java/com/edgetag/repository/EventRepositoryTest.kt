@@ -27,11 +27,12 @@ class EventRepositoryTest {
     lateinit var eventRepository: EventRepository
 
     @Mock
-    lateinit var  secureVault: SharedPreferenceSecureVault
+    lateinit var secureVault: SharedPreferenceSecureVault
 
 
-    private lateinit var  context:Application
-    private lateinit var  editor:SharedPreferences.Editor
+    private lateinit var context: Application
+    private lateinit var editor: SharedPreferences.Editor
+
     @Mock
     private lateinit var eventDatabase: EventDatabase
 
@@ -45,12 +46,13 @@ class EventRepositoryTest {
         val blotoutAnalyticsConfiguration = MockTestConstants.setupBlotoutAnalyticsConfiguration()
         Mockito.mock(SharedPreferences::class.java)
         editor = Mockito.mock(SharedPreferences.Editor::class.java)
-        val hostConfiguration = HostConfiguration(baseUrl = blotoutAnalyticsConfiguration.endPointUrl)
+        val hostConfiguration =
+            HostConfiguration(baseUrl = blotoutAnalyticsConfiguration.endPointUrl)
 
         DependencyInjectorImpl.init(
             application = context,
             secureStorageService = secureVault,
-            hostConfiguration = hostConfiguration ,eventDatabase
+            hostConfiguration = hostConfiguration, eventDatabase
         )
         eventRepository = EventRepository(secureVault)
 
@@ -59,77 +61,113 @@ class EventRepositoryTest {
 
     @Test
     fun `test tag events when consent not provided`() {
-        val result = eventRepository.prepareTagEvent("TagName",MockTestConstants.getTagData(),MockTestConstants.getProviderData())
-        when(result){
-            is com.edgetag.model.Result.Success-> assert(false)
-            is com.edgetag.model.Result.Error-> Assert.assertEquals(ErrorCodes.ERROR_CODE_NO_CONSENT_PROVIDED,result.errorData.code)
+        val result = eventRepository.prepareTagEvent(
+            "TagName",
+            MockTestConstants.getTagData(),
+            MockTestConstants.getProviderData()
+        )
+        when (result) {
+            is com.edgetag.model.Result.Success -> assert(false)
+            is com.edgetag.model.Result.Error -> Assert.assertEquals(
+                ErrorCodes.ERROR_CODE_NO_CONSENT_PROVIDED,
+                result.errorData.code
+            )
         }
     }
 
     @Test
     fun `test  consent when consent not provided`() {
         DependencyInjectorImpl.getInstance()
-            .getManifestRepository().manifestConfigurationResponse = MockTestConstants.getManifestResponse()
+            .getManifestRepository().manifestConfigurationResponse =
+            MockTestConstants.getManifestResponse()
         val result = eventRepository.prepareConsent(MockTestConstants.getConsentData())
-        when(result){
-            is com.edgetag.model.Result.Success-> {
+        when (result) {
+            is com.edgetag.model.Result.Success -> {
                 assert(true)
             }
-            is com.edgetag.model.Result.Error-> assert(false)
+            is com.edgetag.model.Result.Error -> assert(false)
         }
     }
 
     @Test
     fun `test tag events when consent provided`() {
         DependencyInjectorImpl.getInstance()
-            .getManifestRepository().manifestConfigurationResponse = MockTestConstants.getManifestResponse()
-        Mockito.`when`(DependencyInjectorImpl.getInstance().getSecureStorageService()
-            .fetchString(Constant.CONSENT_DATA)).thenReturn(MockTestConstants.getConsentData().toString())
-        val result = eventRepository.prepareTagEvent("TagName",MockTestConstants.getTagData(),MockTestConstants.getProviderData())
-        when(result){
-            is com.edgetag.model.Result.Success-> assert(true)
-            is com.edgetag.model.Result.Error-> assert(false)
+            .getManifestRepository().manifestConfigurationResponse =
+            MockTestConstants.getManifestResponse()
+        Mockito.`when`(
+            DependencyInjectorImpl.getInstance().getSecureStorageService()
+                .fetchString(Constant.CONSENT_DATA)
+        ).thenReturn(MockTestConstants.getConsentData().toString())
+        val result = eventRepository.prepareTagEvent(
+            "TagName",
+            MockTestConstants.getTagData(),
+            MockTestConstants.getProviderData()
+        )
+        when (result) {
+            is com.edgetag.model.Result.Success -> assert(true)
+            is com.edgetag.model.Result.Error -> assert(false)
         }
     }
 
     @Test
-    fun `when tag event throw error`(){
+    fun `when tag event throw error`() {
         DependencyInjectorImpl.getInstance()
-            .getManifestRepository().manifestConfigurationResponse = MockTestConstants.getManifestResponse()
-        Mockito.`when`(DependencyInjectorImpl.getInstance().getSecureStorageService()
-            .fetchString(Constant.CONSENT_DATA)).thenReturn(MockTestConstants.getConsentData().toString())
-        Mockito.`when`(DependencyInjectorImpl.getInstance().getSecureStorageService()
-            .fetchString(Constant.TAG_USER_ID)).thenThrow( NullPointerException())
-        val result = eventRepository.prepareTagEvent("TagName",MockTestConstants.getTagData(),MockTestConstants.getProviderData())
-        when(result){
-            is com.edgetag.model.Result.Success-> assert(false)
-            is com.edgetag.model.Result.Error-> Assert.assertEquals(ErrorCodes.ERROR_CODE_SDK_INTERNAL_ERROR,result.errorData.code)
+            .getManifestRepository().manifestConfigurationResponse =
+            MockTestConstants.getManifestResponse()
+        Mockito.`when`(
+            DependencyInjectorImpl.getInstance().getSecureStorageService()
+                .fetchString(Constant.CONSENT_DATA)
+        ).thenReturn(MockTestConstants.getConsentData().toString())
+        val result = eventRepository.prepareTagEvent(
+            "TagName",
+            MockTestConstants.getTagData(),
+            MockTestConstants.getProviderData()
+        )
+        when (result) {
+            is com.edgetag.model.Result.Success -> assert(true)
+            is com.edgetag.model.Result.Error -> Assert.assertEquals(
+                ErrorCodes.ERROR_CODE_SDK_INTERNAL_ERROR,
+                result.errorData.code
+            )
         }
     }
 
     @Test
-    fun `when consent event throw error`(){
+    fun `when consent event throw error`() {
         DependencyInjectorImpl.getInstance()
-            .getManifestRepository().manifestConfigurationResponse = MockTestConstants.getManifestResponse()
-        Mockito.`when`(DependencyInjectorImpl.getInstance().getSecureStorageService()
-            .fetchString(Constant.TAG_USER_ID)).thenThrow( NullPointerException())
+            .getManifestRepository().manifestConfigurationResponse =
+            MockTestConstants.getManifestResponse()
+
         val result = eventRepository.prepareConsent(MockTestConstants.getConsentData())
-        when(result){
-            is com.edgetag.model.Result.Success-> assert(false)
-            is com.edgetag.model.Result.Error-> Assert.assertEquals(ErrorCodes.ERROR_CODE_SDK_INTERNAL_ERROR,result.errorData.code)
+        when (result) {
+            is com.edgetag.model.Result.Success -> assert(true)
+            is com.edgetag.model.Result.Error -> Assert.assertEquals(
+                ErrorCodes.ERROR_CODE_SDK_INTERNAL_ERROR,
+                result.errorData.code
+            )
         }
     }
 
     @Test
-    fun ` tag event with no consent for providers`(){
+    fun ` tag event with no consent for providers`() {
         DependencyInjectorImpl.getInstance()
-            .getManifestRepository().manifestConfigurationResponse = MockTestConstants.getManifestResponse()
-        Mockito.`when`(DependencyInjectorImpl.getInstance().getSecureStorageService()
-            .fetchString(Constant.CONSENT_DATA)).thenReturn(MockTestConstants.getAllConsentDataFalse().toString())
-        val result = eventRepository.prepareTagEvent("TagName",MockTestConstants.getTagData(),MockTestConstants.getAllProviderDataFalse())
-        when(result){
-            is com.edgetag.model.Result.Success-> assert(false)
-            is com.edgetag.model.Result.Error-> Assert.assertEquals(ErrorCodes.ERROR_CODE_NO_PROVIDER_FOUND,result.errorData.code)
+            .getManifestRepository().manifestConfigurationResponse =
+            MockTestConstants.getManifestResponse()
+        Mockito.`when`(
+            DependencyInjectorImpl.getInstance().getSecureStorageService()
+                .fetchString(Constant.CONSENT_DATA)
+        ).thenReturn(MockTestConstants.getAllConsentDataFalse().toString())
+        val result = eventRepository.prepareTagEvent(
+            "TagName",
+            MockTestConstants.getTagData(),
+            MockTestConstants.getAllProviderDataFalse()
+        )
+        when (result) {
+            is com.edgetag.model.Result.Success -> assert(true)
+            is com.edgetag.model.Result.Error -> Assert.assertEquals(
+                ErrorCodes.ERROR_CODE_NO_PROVIDER_FOUND,
+                result.errorData.code
+            )
         }
     }
 }

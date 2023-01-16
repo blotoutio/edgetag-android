@@ -58,9 +58,9 @@ public class ProductDetailsFragment extends Fragment {
     private TextView itemdescription;
     private IBuilder mDrawableBuilder;
     private TextDrawable drawable;
-    private ColorGenerator mColorGenerator = ColorGenerator.MATERIAL;
-    private String subcategoryKey;
-    private boolean isFromCart;
+    private final ColorGenerator mColorGenerator = ColorGenerator.MATERIAL;
+    private final String subcategoryKey;
+    private final boolean isFromCart;
     private ClickableViewPager similarProductsPager;
     private ClickableViewPager topSellingPager;
     private Toolbar mToolbar;
@@ -516,7 +516,7 @@ public class ProductDetailsFragment extends Fragment {
                     BigDecimal.valueOf(Long.valueOf(CenterRepository
                             .getCenterRepository().getMapOfProductsInCategory()
                             .get(subcategoryKey).get(productListNumber)
-                            .getSellMRP()))).toString()
+                            .getSellMRP())))
                     + "  ";
 
             String buyMRP = Money.rupees(
@@ -597,7 +597,7 @@ public class ProductDetailsFragment extends Fragment {
             String sellCostString = Money.rupees(
                     BigDecimal.valueOf(Long.valueOf(CenterRepository
                             .getCenterRepository().getListOfProductsInShoppingList()
-                            .get(productListNumber).getSellMRP()))).toString()
+                            .get(productListNumber).getSellMRP())))
                     + "  ";
 
             String buyMRP = Money.rupees(

@@ -40,7 +40,7 @@ public class ProductListAdapter extends
         RecyclerView.Adapter<ProductListAdapter.VersionViewHolder> implements
         ItemTouchHelperAdapter {
 
-    private ColorGenerator mColorGenerator = ColorGenerator.MATERIAL;
+    private final ColorGenerator mColorGenerator = ColorGenerator.MATERIAL;
 
     private IBuilder mDrawableBuilder;
 
@@ -51,7 +51,7 @@ public class ProductListAdapter extends
     private List<Product> productList = new ArrayList<Product>();
     private OnItemClickListener clickListener;
 
-    private Context context;
+    private final Context context;
 
     public ProductListAdapter(String subcategoryKey, Context context,
                               boolean isCartlist) {
@@ -91,7 +91,7 @@ public class ProductListAdapter extends
 
         String sellCostString = Money.rupees(
                 BigDecimal.valueOf(Long.valueOf(productList.get(position)
-                        .getSellMRP()))).toString()
+                        .getSellMRP())))
                 + "  ";
 
         String buyMRP = Money.rupees(
@@ -300,7 +300,7 @@ public class ProductListAdapter extends
     }
 
     public interface OnItemClickListener {
-        public void onItemClick(View view, int position);
+        void onItemClick(View view, int position);
     }
 
     class VersionViewHolder extends RecyclerView.ViewHolder implements

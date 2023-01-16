@@ -24,7 +24,7 @@ public class Utils {
     public static final String PRODUCT_OVERVIEW_FRAGMENT_TAG = "ProductOverView";
     public static final String HOME_FRAGMENT = "HomeFragment";
     private static String CURRENT_TAG = null;
-    private static Map<String, Typeface> TYPEFACE = new HashMap<String, Typeface>();
+    private static final Map<String, Typeface> TYPEFACE = new HashMap<String, Typeface>();
 
 
 
