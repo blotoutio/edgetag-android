@@ -6,7 +6,7 @@ import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Debug
 import android.util.Log
-import com.edgetag.providers.blotoutcloud.utils.CommonUtils
+import com.edgetag.provider.providers.blotoutcloud.utils.CommonUtils
 import java.io.BufferedReader
 import java.io.File
 import java.io.IOException

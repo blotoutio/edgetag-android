@@ -8,7 +8,7 @@ interface ProviderInterface {
         fun onSuccess()
         fun onError(code : Int = 0, msg : String = "")
     }
-    fun initProvider(application: Application,
+    fun init(application: Application,
              completionHandler: CompletionHandler
     )
     fun tag(

@@ -2,10 +2,11 @@ package com.edgetag.providers.blotoutcloud
 
 import android.app.Application
 import android.util.Log
+import com.edgetag.EdgeTag
+import com.edgetag.provider.providers.blotoutcloud.repository.data.SharedPreferenceSecureVault
+import com.edgetag.provider.providers.blotoutcloud.utils.Constant
+import com.edgetag.provider.providers.blotoutcloud.utils.DateTimeUtils
 import com.edgetag.providers.blotoutcloud.deviceinfo.device.DeviceInfo
-import com.edgetag.providers.blotoutcloud.repository.data.SharedPreferenceSecureVault
-import com.edgetag.providers.blotoutcloud.utils.Constant
-import com.edgetag.providers.blotoutcloud.utils.DateTimeUtils
 
 class DependencyInjectorImpl private constructor(
     application: Application,
@@ -70,8 +71,8 @@ class DependencyInjectorImpl private constructor(
 
     fun initialize(){
         try {
-            BlotoutCloud().tag(Constant.BO_SDK_START,null, Constant.getProviderInfo(), object :
-                ProviderInterface.CompletionHandler {
+            EdgeTag.tag(Constant.BO_SDK_START,null,Constant.getProviderInfo(), object :
+                com.edgetag.model.CompletionHandler {
                 override fun onSuccess() {
                 }
 

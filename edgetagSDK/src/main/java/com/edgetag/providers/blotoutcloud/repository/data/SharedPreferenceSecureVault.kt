@@ -1,4 +1,4 @@
-package com.edgetag.providers.blotoutcloud.repository.data
+package com.edgetag.provider.providers.blotoutcloud.repository.data
 
 interface SharedPreferenceSecureVault {
     fun storeString(key:String,value:String?)

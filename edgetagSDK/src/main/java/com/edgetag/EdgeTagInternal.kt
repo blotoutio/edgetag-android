@@ -92,7 +92,7 @@ open class EdgeTagInternal : EdgeTagInterface {
                                     isSdkinitiliazed = true
                                     DependencyInjectorImpl.getInstance().initialize()
                                     for(providers in edgeTagConfiguration.providerInfo.keys){
-                                        providers.initProvider(application,object: ProviderInterface.CompletionHandler{
+                                        providers.init(application,object: ProviderInterface.CompletionHandler{
                                             override fun onSuccess() {
                                             }
 

@@ -1,8 +1,10 @@
-package com.edgetag.providers.blotoutcloud.utils
+package com.edgetag.provider.providers.blotoutcloud.utils
 
 import android.util.Base64
 import android.util.Log
+import java.security.KeyFactory
 import java.security.MessageDigest
+import java.security.spec.X509EncodedKeySpec
 import java.util.*
 import javax.crypto.Cipher
 import javax.crypto.spec.IvParameterSpec
@@ -278,5 +280,21 @@ class EncryptionUtils(algorithm: String="", passphrase: String="", mode: Int=0) 
         return hexString.toString()
     }
 
+    ///Methods related to PHI and PII Data encryption
+    fun encryptText(msg: ByteArray?, base64PublicKeyString: String?): String? {
+        return try {
+
+            /////prepare key from base64String at SDK received from server
+            val publicKey = KeyFactory.getInstance("RSA").generatePublic(X509EncodedKeySpec(Base64.decode(base64PublicKeyString, Base64.NO_WRAP)))
+
+            ///encryption at SDK end
+            val rsaCipher = Cipher.getInstance("RSA")
+            rsaCipher.init(Cipher.ENCRYPT_MODE, publicKey)
+            Base64.encodeToString(rsaCipher.doFinal(msg), Base64.NO_WRAP)
+        } catch (e: Exception) {
+            Log.e(TAG, e.message!!)
+            null
+        }
+    }
 
 }
