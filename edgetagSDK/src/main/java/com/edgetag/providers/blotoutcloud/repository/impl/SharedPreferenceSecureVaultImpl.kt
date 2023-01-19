@@ -1,9 +1,9 @@
-package com.edgetag.provider.providers.blotoutcloud.repository.impl
+package com.edgetag.providers.blotoutcloud.repository.impl
 
 import android.content.SharedPreferences
-import com.edgetag.provider.providers.blotoutcloud.repository.data.SharedPreferenceSecureVault
+import com.edgetag.providers.blotoutcloud.repository.data.SharedPreferenceSecureVault
 
-class SharedPreferenceSecureVaultImpl(private val preference:SharedPreferences, private val cryptoService: String) :
+class SharedPreferenceSecureVaultImpl(private val preference:SharedPreferences) :
     SharedPreferenceSecureVault {
 
     override fun storeString(key: String, value: String?) {

@@ -1,4 +1,4 @@
-package com.edgetag.provider.providers.blotoutcloud.utils
+package com.edgetag.providers.blotoutcloud.utils
 
 import android.os.Build
 import android.text.TextUtils
@@ -87,14 +87,16 @@ class CommonUtils {
         // Epoc 13 Digit time at the end = Input for SHA 512 or UUID function in case it takes
         var deviceId = ""
         try {
-            deviceId = DependencyInjectorImpl.getInstance().getSecureStorageService().fetchString(Constant.BO_ANALYTICS_USER_UNIQUE_KEY)
+            deviceId = DependencyInjectorImpl.getInstance().getSecureStorageService().fetchString(
+                Constant.BO_ANALYTICS_USER_UNIQUE_KEY)
             if (deviceId != null && deviceId.isNotEmpty()) {
                 return deviceId
             } else {
 
                 val stringBuilder = StringBuilder()
                 stringBuilder.append(DateTimeUtils().get13DigitNumberObjTimeStamp())
-                stringBuilder.append(DependencyInjectorImpl.getInstance().getSecureStorageService().fetchString(Constant.SDK_KEY))
+                stringBuilder.append(DependencyInjectorImpl.getInstance().getSecureStorageService().fetchString(
+                    Constant.SDK_KEY))
                 stringBuilder.append(UUID.nameUUIDFromBytes(getUUID()!!.toByteArray()).toString())
                 stringBuilder.append(generateNumber())
                 stringBuilder.append(generateNumber())

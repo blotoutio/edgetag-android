@@ -5,8 +5,8 @@ import android.content.Context
 import android.util.Log
 import com.edgetag.EdgeTag
 import com.edgetag.provider.providers.blotoutcloud.model.ErrorCodes
-import com.edgetag.provider.providers.blotoutcloud.repository.impl.SharedPreferenceSecureVaultImpl
-import com.edgetag.provider.providers.blotoutcloud.utils.Constant
+import com.edgetag.providers.blotoutcloud.utils.Constant
+import com.edgetag.providers.blotoutcloud.repository.impl.SharedPreferenceSecureVaultImpl
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -20,7 +20,7 @@ open class BlotoutAnalyticsInternal : BlotoutAnalyticsInterface {
     }
 
 
-    override fun init(
+    override fun initProvider(
         application: Application,
         completionHandler: ProviderInterface.CompletionHandler
     ) {
@@ -29,7 +29,7 @@ open class BlotoutAnalyticsInternal : BlotoutAnalyticsInterface {
         }
         CoroutineScope(Dispatchers.IO+handler).launch {
 
-            val secureVault = SharedPreferenceSecureVaultImpl(application.getSharedPreferences("vault", Context.MODE_PRIVATE), "crypto")
+            val secureVault = SharedPreferenceSecureVaultImpl(application.getSharedPreferences("vault", Context.MODE_PRIVATE))
 
             DependencyInjectorImpl.init(
                 application = application,

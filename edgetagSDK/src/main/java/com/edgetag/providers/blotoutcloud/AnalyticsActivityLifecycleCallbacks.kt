@@ -14,11 +14,11 @@ import android.view.MotionEvent
 import android.view.View
 import androidx.lifecycle.DefaultLifecycleObserver
 import com.edgetag.EdgeTag
-import com.edgetag.provider.providers.blotoutcloud.repository.data.SharedPreferenceSecureVault
-import com.edgetag.provider.providers.blotoutcloud.utils.Constant
-import com.edgetag.provider.providers.blotoutcloud.utils.Constant.getScreenName
 import com.edgetag.providers.blotoutcloud.geasture.Gesture
 import com.edgetag.providers.blotoutcloud.geasture.GestureListener
+import com.edgetag.providers.blotoutcloud.repository.data.SharedPreferenceSecureVault
+import com.edgetag.providers.blotoutcloud.utils.Constant
+import com.edgetag.providers.blotoutcloud.utils.Constant.getScreenName
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -104,7 +104,7 @@ class AnalyticsActivityLifecycleCallbacks(private var secureStorage: SharedPrefe
 
     override fun onActivityResumed(activity: Activity) {
         try {
-            EdgeTag.tag(Constant.BO_VISIBILITY_VISIBLE,null,Constant.getProviderInfo(), object :
+            EdgeTag.tag(Constant.BO_VISIBILITY_VISIBLE,null, Constant.getProviderInfo(), object :
                 com.edgetag.model.CompletionHandler {
                 override fun onSuccess() {
                 }
@@ -121,7 +121,7 @@ class AnalyticsActivityLifecycleCallbacks(private var secureStorage: SharedPrefe
 
     override fun onActivityPaused(activity: Activity) {
         try {
-            EdgeTag.tag(Constant.BO_VISIBILITY_HIDDEN,null,Constant.getProviderInfo(), object :
+            EdgeTag.tag(Constant.BO_VISIBILITY_HIDDEN,null, Constant.getProviderInfo(), object :
                 com.edgetag.model.CompletionHandler {
                 override fun onSuccess() {
                 }
@@ -130,7 +130,9 @@ class AnalyticsActivityLifecycleCallbacks(private var secureStorage: SharedPrefe
                 }
 
             })
-            BlotoutCloud().tag(Constant.BO_APPLICATION_BACKGROUNDED,null,Constant.getProviderInfo(), object :
+            BlotoutCloud().tag(
+                Constant.BO_APPLICATION_BACKGROUNDED,null,
+                Constant.getProviderInfo(), object :
                 ProviderInterface.CompletionHandler {
                 override fun onSuccess() {
                 }
@@ -186,7 +188,9 @@ class AnalyticsActivityLifecycleCallbacks(private var secureStorage: SharedPrefe
             }
             properties["url"] = uri.toString()
 
-            BlotoutCloud().tag(Constant.BO_DEEP_LINK_OPENED,properties,Constant.getProviderInfo(), object :
+            BlotoutCloud().tag(
+                Constant.BO_DEEP_LINK_OPENED,properties,
+                Constant.getProviderInfo(), object :
                 ProviderInterface.CompletionHandler {
                 override fun onSuccess() {
                 }
@@ -209,7 +213,9 @@ class AnalyticsActivityLifecycleCallbacks(private var secureStorage: SharedPrefe
 
             val previousVersion = secureStorage.fetchString((Constant.BO_VERSION_KEY))
             if (previousVersion.isEmpty()) {
-                BlotoutCloud().tag(Constant.BO_APPLICATION_INSTALLED,tagInfo,Constant.getProviderInfo(), object :
+                BlotoutCloud().tag(
+                    Constant.BO_APPLICATION_INSTALLED,tagInfo,
+                    Constant.getProviderInfo(), object :
                     ProviderInterface.CompletionHandler {
                     override fun onSuccess() {
                     }
@@ -220,7 +226,9 @@ class AnalyticsActivityLifecycleCallbacks(private var secureStorage: SharedPrefe
                 })
 
             } else if (previousVersion != currentVersion) {
-                BlotoutCloud().tag(Constant.BO_APPLICATION_UPDATED,tagInfo,Constant.getProviderInfo(), object :
+                BlotoutCloud().tag(
+                    Constant.BO_APPLICATION_UPDATED,tagInfo,
+                    Constant.getProviderInfo(), object :
                     ProviderInterface.CompletionHandler {
                     override fun onSuccess() {
                     }
@@ -248,7 +256,7 @@ class AnalyticsActivityLifecycleCallbacks(private var secureStorage: SharedPrefe
         try {
             val tagInfo =  hashMapOf<String,Any>()
             tagInfo[Constant.BO_EVENT_KEY_PATH_NAME] = activityReference!!.get()!!.getScreenName()
-            BlotoutCloud().tag(Constant.BO_EVENT_CLICK_NAME,null,Constant.getProviderInfo(), object :
+            BlotoutCloud().tag(Constant.BO_EVENT_CLICK_NAME,null, Constant.getProviderInfo(), object :
                 ProviderInterface.CompletionHandler {
                 override fun onSuccess() {
                 }
@@ -266,7 +274,7 @@ class AnalyticsActivityLifecycleCallbacks(private var secureStorage: SharedPrefe
         try {
             val tagInfo =  hashMapOf<String,Any>()
             tagInfo[Constant.BO_EVENT_KEY_PATH_NAME] = activityReference!!.get()!!.getScreenName()
-            BlotoutCloud().tag(Constant.BO_EVENT_TOUCH_NAME,null,Constant.getProviderInfo(), object :
+            BlotoutCloud().tag(Constant.BO_EVENT_TOUCH_NAME,null, Constant.getProviderInfo(), object :
                 ProviderInterface.CompletionHandler {
                 override fun onSuccess() {
                 }
@@ -284,7 +292,9 @@ class AnalyticsActivityLifecycleCallbacks(private var secureStorage: SharedPrefe
         try {
             val tagInfo =  hashMapOf<String,Any>()
             tagInfo[Constant.BO_EVENT_KEY_PATH_NAME] = activityReference!!.get()!!.getScreenName()
-            BlotoutCloud().tag(Constant.BO_EVENT_SCROLL_NAME,null,Constant.getProviderInfo(), object :
+            BlotoutCloud().tag(
+                Constant.BO_EVENT_SCROLL_NAME,null,
+                Constant.getProviderInfo(), object :
                 ProviderInterface.CompletionHandler {
                 override fun onSuccess() {
                 }
@@ -306,7 +316,9 @@ class AnalyticsActivityLifecycleCallbacks(private var secureStorage: SharedPrefe
         try {
             val tagInfo =  hashMapOf<String,Any>()
             tagInfo[Constant.BO_EVENT_KEY_PATH_NAME] = activityReference!!.get()!!.getScreenName()
-            BlotoutCloud().tag(Constant.BO_EVENT_KEY_RELEASE_NAME,null,Constant.getProviderInfo(), object :
+            BlotoutCloud().tag(
+                Constant.BO_EVENT_KEY_RELEASE_NAME,null,
+                Constant.getProviderInfo(), object :
                 ProviderInterface.CompletionHandler {
                 override fun onSuccess() {
                 }
@@ -324,7 +336,9 @@ class AnalyticsActivityLifecycleCallbacks(private var secureStorage: SharedPrefe
         try {
             val tagInfo =  hashMapOf<String,Any>()
             tagInfo[Constant.BO_EVENT_KEY_PATH_NAME] = activityReference!!.get()!!.getScreenName()
-            BlotoutCloud().tag(Constant.BO_EVENT_KEY_RELEASE_NAME,null,Constant.getProviderInfo(), object :
+            BlotoutCloud().tag(
+                Constant.BO_EVENT_KEY_RELEASE_NAME,null,
+                Constant.getProviderInfo(), object :
                 ProviderInterface.CompletionHandler {
                 override fun onSuccess() {
                 }
@@ -342,7 +356,9 @@ class AnalyticsActivityLifecycleCallbacks(private var secureStorage: SharedPrefe
         try {
             val tagInfo =  hashMapOf<String,Any>()
             tagInfo[Constant.BO_EVENT_KEY_PATH_NAME] = activityReference!!.get()!!.getScreenName()
-            BlotoutCloud().tag(Constant.BO_EVENT_MULTI_CLICK_NAME,null,Constant.getProviderInfo(), object :
+            BlotoutCloud().tag(
+                Constant.BO_EVENT_MULTI_CLICK_NAME,null,
+                Constant.getProviderInfo(), object :
                 ProviderInterface.CompletionHandler {
                 override fun onSuccess() {
                 }
@@ -366,7 +382,9 @@ class AnalyticsActivityLifecycleCallbacks(private var secureStorage: SharedPrefe
                 properties[Constant.BO_EVENT_ERROR_NAME] = paramThrowable.localizedMessage!!
                 val tagInfo =  hashMapOf<String,Any>()
                 tagInfo[Constant.BO_EVENT_KEY_PATH_NAME] = activityReference!!.get()!!.getScreenName()
-                BlotoutCloud().tag(Constant.BO_EVENT_ERROR_NAME,null,Constant.getProviderInfo(), object :
+                BlotoutCloud().tag(
+                    Constant.BO_EVENT_ERROR_NAME,null,
+                    Constant.getProviderInfo(), object :
                     ProviderInterface.CompletionHandler {
                     override fun onSuccess() {
                     }

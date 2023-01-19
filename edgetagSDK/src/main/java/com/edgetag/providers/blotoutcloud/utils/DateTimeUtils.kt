@@ -1,4 +1,4 @@
-package com.edgetag.provider.providers.blotoutcloud.utils
+package com.edgetag.providers.blotoutcloud.utils
 
 import java.util.*
 
