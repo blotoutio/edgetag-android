@@ -1,3 +1,2 @@
 include ':blotoutapp'
 include ':edgetagSDK'
-include ':provider'

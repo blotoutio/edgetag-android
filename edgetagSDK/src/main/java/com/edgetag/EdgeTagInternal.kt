@@ -13,7 +13,6 @@ import com.edgetag.model.Result
 import com.edgetag.model.edgetag.ManifestConfigurationResponse
 import com.edgetag.network.ApiDataProvider
 import com.edgetag.network.HostConfiguration
-import com.edgetag.providers.blotoutcloud.ProviderInterface
 import com.edgetag.repository.EventRepository
 import com.edgetag.repository.impl.SharedPreferenceSecureVaultImpl
 import com.edgetag.util.Constant
@@ -91,16 +90,7 @@ open class EdgeTagInternal : EdgeTagInterface {
                                 override fun onSuccess(data: ManifestConfigurationResponse?) {
                                     isSdkinitiliazed = true
                                     DependencyInjectorImpl.getInstance().initialize()
-                                    for(providers in edgeTagConfiguration.providerInfo.keys){
-                                        providers.init(application,object: ProviderInterface.CompletionHandler{
-                                            override fun onSuccess() {
-                                            }
-
-                                            override fun onError(code: Int, msg: String) {
-                                            }
-
-                                        })
-                                    }
+                                    //validateDisableConsentCheck(edgeTagConfiguration.disableConsentCheck)
                                     completionHandler.onSuccess()
                                 }
 
