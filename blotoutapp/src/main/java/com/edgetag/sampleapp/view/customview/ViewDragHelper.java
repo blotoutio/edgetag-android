@@ -111,13 +111,13 @@ public class ViewDragHelper {
     private int mPointersDown;
 
     private VelocityTracker mVelocityTracker;
-    private float mMaxVelocity;
+    private final float mMaxVelocity;
     private float mMinVelocity;
 
-    private int mEdgeSize;
+    private final int mEdgeSize;
     private int mTrackingEdges;
 
-    private ScrollerCompat mScroller;
+    private final ScrollerCompat mScroller;
 
     private final Callback mCallback;
 

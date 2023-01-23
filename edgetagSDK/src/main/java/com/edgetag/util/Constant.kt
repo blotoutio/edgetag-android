@@ -7,11 +7,12 @@ object Constant {
   const val CONSENT_DATA = "consent_data"
   const val SDK_END_POINT_URL = "endPoint"
   const val CONSENT_AVAILABLE = "consent_available"
-  const val TAG_USER_ID = "tag_user_id"
+  const val TAG_USER_ID = "EdgeTagUserId"
   const val REFFERAL = "refferal"
   const val KEY = "key"
   const val VALUE = "value"
   const val STORAGE_DATA = "kv"
+  const val PROVIDER_DATA = "providerData"
 
   const val EDGE_TAG_REST_API_MANIFEST_PULL_PATH = "/init"
   const val EDGE_TAG_REST_API_EVENTS_PUSH_PATH = "/tag"

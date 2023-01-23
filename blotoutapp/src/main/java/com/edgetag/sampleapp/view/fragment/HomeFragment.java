@@ -41,7 +41,7 @@ public class HomeFragment extends Fragment {
             doubleBackToExitPressedOnce = false;
         }
     };
-    private Handler mHandler = new Handler();
+    private final Handler mHandler = new Handler();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

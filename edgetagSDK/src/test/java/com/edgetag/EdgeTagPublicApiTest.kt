@@ -59,7 +59,7 @@ class EdgeTagPublicApiTest {
         val blotoutAnalyticsConfiguration = MockTestConstants.setupBlotoutAnalyticsConfiguration()
         blotoutAnalyticsConfiguration.endPointUrl = ""
         val errorCode = blotoutAnalyticsConfiguration.validateRequest()
-        Assert.assertEquals(ErrorCodes.ERROR_CODE_END_POINT_URL_NOT_PROPER, errorCode)
+        assertEquals(ErrorCodes.ERROR_CODE_END_POINT_URL_NOT_PROPER, errorCode)
     }
 
     @Test

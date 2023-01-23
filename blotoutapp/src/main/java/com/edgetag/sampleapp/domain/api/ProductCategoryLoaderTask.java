@@ -24,8 +24,8 @@ import com.edgetag.sampleapp.view.fragment.ProductOverviewFragment;
 public class ProductCategoryLoaderTask extends AsyncTask<String, Void, Void> {
 
     private static final int NUMBER_OF_COLUMNS = 2;
-    private Context context;
-    private RecyclerView recyclerView;
+    private final Context context;
+    private final RecyclerView recyclerView;
 
     public ProductCategoryLoaderTask(RecyclerView listView, Context context) {
 

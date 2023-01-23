@@ -43,10 +43,6 @@ class EdgetagMetaData {
     @Expose
     var providers: HashMap<String, Boolean>? = null
 
-    @SerializedName(Constant.TAG_USER_ID)
-    @Expose
-    var tag_user_id: String? = null
-
     @SerializedName(Constant.KEY)
     @Expose
     var key: String? = null
@@ -54,5 +50,9 @@ class EdgetagMetaData {
     @SerializedName(Constant.VALUE)
     @Expose
     var value: String? = null
+
+    @SerializedName(Constant.PROVIDER_DATA)
+    @Expose
+    var providerData: HashMap<String, Any>? = null
 
 }

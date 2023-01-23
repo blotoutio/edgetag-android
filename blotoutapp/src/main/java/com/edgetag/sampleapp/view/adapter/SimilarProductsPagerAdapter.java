@@ -41,13 +41,13 @@ public class SimilarProductsPagerAdapter extends PagerAdapter {
      */
     LayoutInflater mLayoutInflater;
 
-    private String productCategory;
+    private final String productCategory;
 
     private ImageView imageView;
 
     private IBuilder mDrawableBuilder;
     private TextDrawable drawable;
-    private ColorGenerator mColorGenerator = ColorGenerator.MATERIAL;
+    private final ColorGenerator mColorGenerator = ColorGenerator.MATERIAL;
 
     /**
      * Instantiates a new home slides pager adapter.

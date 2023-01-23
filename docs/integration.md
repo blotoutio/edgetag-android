@@ -27,32 +27,33 @@ implementation 'com.github.blotoutio:sdk-android:0.9.0'
  Please initialize the BlotoutAnalytics in Android Application class.
 
 ```kotlin
-import com.edgetag.analytics.BlotoutAnalytics;
+import com.edgetag.analytics.BlotoutAnalytics
 
-BlotoutAnalyticsConfiguration blotoutAnalyticsConfiguration = new BlotoutAnalyticsConfiguration();
-blotoutAnalyticsConfiguration.setBlotoutSDKKey("EADAH5FV8B5MMVZ");
-blotoutAnalyticsConfiguration.setEndPointUrl("https://stage.blotout.io/sdk/");
+BlotoutAnalyticsConfiguration blotoutAnalyticsConfiguration = new BlotoutAnalyticsConfiguration()
+blotoutAnalyticsConfiguration.setBlotoutSDKKey("EADAH5FV8B5MMVZ")
+blotoutAnalyticsConfiguration.setEndPointUrl("https://stage.blotout.io/sdk/")
 BlotoutAnalytics.INSTANCE.init(this,blotoutAnalyticsConfiguration,new CompletionHandler() {
     @Override
-    public void onSuccess() {
+    public void onSuccess {
 
     }
 
     @Override
-    public void onError() {
+    public void onError {
 
     }
-});
+})
 
 ```
 
 ### Option 2 Kotlin:
+
 ```kotlin
 var blotoutAnalyticsConfiguration = BlotoutAnalyticsConfiguration()
 blotoutAnalyticsConfiguration.blotoutSDKKey = "EADAH5FV8B5MMVZ"
 blotoutAnalyticsConfiguration.endPointUrl = "https://stage.blotout.io/sdk/"
 
-BlotoutAnalytics.INSTANCE.init(this,blotoutAnalyticsConfiguration,object : CompletionHandler() {
+BlotoutAnalytics.INSTANCE.init(this, blotoutAnalyticsConfiguration, object : CompletionHandler() {
     @Override
     fun onSuccess() {
 
@@ -62,6 +63,6 @@ BlotoutAnalytics.INSTANCE.init(this,blotoutAnalyticsConfiguration,object : Compl
     fun onError() {
 
     }
-});
+})
 
 ```

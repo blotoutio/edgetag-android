@@ -9,19 +9,17 @@ import android.util.Log
 import androidx.lifecycle.DefaultLifecycleObserver
 import com.edgetag.util.Constant
 import com.google.gson.Gson
-import java.lang.ref.WeakReference
 import java.util.concurrent.atomic.AtomicBoolean
 import java.util.concurrent.atomic.AtomicInteger
 
 
-class AnalyticsActivityLifecycleCallbacks() :
+class AnalyticsActivityLifecycleCallbacks :
         Application.ActivityLifecycleCallbacks,
         ComponentCallbacks2,
         DefaultLifecycleObserver {
     private var numberOfActivities: AtomicInteger? = null
     private var trackedApplicationLifecycleEvents: AtomicBoolean? = null
     private var firstLaunch: AtomicBoolean? = null
-    private var activityReference: WeakReference<Activity>? = null
 
 
     companion object {
@@ -41,15 +39,8 @@ class AnalyticsActivityLifecycleCallbacks() :
 
     override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
         try {
-            if (!trackedApplicationLifecycleEvents!!.getAndSet(true)) {
-                numberOfActivities!!.set(0)
-                firstLaunch!!.set(true)
-                trackApplicationLifecycleEvents(activity)
-                DependencyInjectorImpl.getEventRepository().visibleActivity = activity
-            }
+            DependencyInjectorImpl.getInstance().pageUrl = activity.localClassName.substringAfterLast(delimiter = '.')
             trackDeepLink(activity)
-            activityReference = WeakReference(activity)
-            val view = activity.window.decorView.rootView
         } catch (e: Exception) {
             Log.e(TAG, e.toString())
         }
@@ -89,10 +80,6 @@ class AnalyticsActivityLifecycleCallbacks() :
 
     override fun onTrimMemory(level: Int) {
 
-    }
-
-
-    private fun trackApplicationLifecycleEvents(activity: Activity) {
     }
 
     private fun trackDeepLink(activity: Activity) {

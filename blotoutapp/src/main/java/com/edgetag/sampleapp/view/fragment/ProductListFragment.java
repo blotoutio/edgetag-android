@@ -27,7 +27,7 @@ import java.util.HashMap;
 
 public class ProductListFragment extends Fragment {
     private String subcategoryKey;
-    private boolean isShoppingList;
+    private final boolean isShoppingList;
 
     public ProductListFragment() {
         isShoppingList = true;

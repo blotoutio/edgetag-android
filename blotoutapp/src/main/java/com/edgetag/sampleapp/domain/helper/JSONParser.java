@@ -18,8 +18,8 @@ import java.util.List;
 
 public class JSONParser {
 
-    private int networktaskType;
-    private String jsonResponse;
+    private final int networktaskType;
+    private final String jsonResponse;
 
     /**
      * @param networktaskType
@@ -41,7 +41,7 @@ public class JSONParser {
             String value = String.valueOf(field.get(object));
             jsonObject.put(name, value);
         }
-        System.out.println(jsonObject.toString());
+        System.out.println(jsonObject);
 
         return jsonObject;
     }

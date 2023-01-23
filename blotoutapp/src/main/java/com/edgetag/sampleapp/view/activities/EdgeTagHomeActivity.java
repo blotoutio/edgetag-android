@@ -1,5 +1,7 @@
 package com.edgetag.sampleapp.view.activities;
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -10,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.edgetag.model.OnComplete;
+import com.edgetag.providers.blotoutcloud.BlotoutCloud;
 import com.edgetag.sampleapp.R;
 import com.edgetag.EdgeTag;
 import com.edgetag.EdgeTagConfiguration;
@@ -50,7 +53,10 @@ public class EdgeTagHomeActivity extends AppCompatActivity {
     Button ad_available_button_press;
     TextView ad_available_response;
 
+    Button launch_activity_button_press;
+
     Gson gson;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +65,7 @@ public class EdgeTagHomeActivity extends AppCompatActivity {
 
         EdgeTagConfiguration edgetagConfiguration = new EdgeTagConfiguration();
         edgetagConfiguration.setEndPointUrl("https://sdk-demo-t.edgetag.io");
+        edgetagConfiguration.getProviderInfo().put(new BlotoutCloud(),true);
 
         initPress = findViewById(R.id.init_button_press);
         toggleButton = findViewById(R.id.disableConsentCheckToggleButton);
@@ -92,7 +99,7 @@ public class EdgeTagHomeActivity extends AppCompatActivity {
         ad_available_button_press=findViewById(R.id.ad_available_button_press);
         ad_available_response=findViewById(R.id.ad_available_response);
 
-
+        launch_activity_button_press = findViewById(R.id.launch_activity_button_press);
         HashMap<String, Boolean> consentHashMap = new HashMap<>();
         consentHashMap.put("facebook", true);
         consentHashMap.put("smart", false);
@@ -112,11 +119,7 @@ public class EdgeTagHomeActivity extends AppCompatActivity {
 
 
         initPress.setOnClickListener(v -> {
-            if (toggleButton.isChecked()) {
-                edgetagConfiguration.setDisableConsentCheck(true);
-            } else {
-                edgetagConfiguration.setDisableConsentCheck(false);
-            }
+            edgetagConfiguration.setDisableConsentCheck(toggleButton.isChecked());
             EdgeTag.INSTANCE.init(getApplication(), edgetagConfiguration, new CompletionHandler() {
                 @Override
                 public void onSuccess() {
@@ -178,6 +181,11 @@ public class EdgeTagHomeActivity extends AppCompatActivity {
             });
         });
 
+        launch_activity_button_press.setOnClickListener(v->{
+            Intent intent = new Intent(getApplicationContext(), SplashActivity.class);
+            startActivity(intent);
+        });
+
         handlePostData();
         handlegetData();
         handlegetkey();
@@ -230,7 +238,7 @@ public class EdgeTagHomeActivity extends AppCompatActivity {
 
                 @Override
                 public void onError(int code, @NonNull String msg) {
-                    post_data_response.setText(msg.toString());
+                    post_data_response.setText(msg);
                 }
             });
         });
@@ -253,7 +261,7 @@ public class EdgeTagHomeActivity extends AppCompatActivity {
 
                 @Override
                 public void onError(int code, @NonNull String msg) {
-                    get_data_response.setText(msg.toString());
+                    get_data_response.setText(msg);
                 }
             });
         });
@@ -269,7 +277,7 @@ public class EdgeTagHomeActivity extends AppCompatActivity {
 
                 @Override
                 public void onError(int code, @NonNull String msg) {
-                    get_key_response.setText(msg.toString());
+                    get_key_response.setText(msg);
                 }
             });
         });

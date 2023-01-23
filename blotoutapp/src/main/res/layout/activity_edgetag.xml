@@ -268,5 +268,12 @@
           android:layout_height="wrap_content"></TextView>
     </LinearLayout>
 
+    <Button
+        android:id="@+id/launch_activity_button_press"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:text="Launch Splash screen"></Button>
+
   </LinearLayout>
 </ScrollView>

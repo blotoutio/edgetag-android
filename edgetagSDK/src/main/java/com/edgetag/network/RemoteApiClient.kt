@@ -61,7 +61,7 @@ class RemoteApiClient(private val hostConfiguration: HostConfiguration) {
                 }
             }
 
-            return originalResponse;
+            return originalResponse
         }
 
         fun <T> processNetworkResponse(response: retrofit2.Response<T>): Result<T?> {

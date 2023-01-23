@@ -29,7 +29,7 @@ public class LabelView extends androidx.appcompat.widget.AppCompatTextView {
     private float _anchory;
     private float _angel;
     private int _labelViewContainerID;
-    private Animation _animation = new Animation() {
+    private final Animation _animation = new Animation() {
         protected void applyTransformation(float interpolatedTime, Transformation t) {
             Matrix tran = t.getMatrix();
             tran.postTranslate(_offsetx, _offsety);

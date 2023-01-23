@@ -3,8 +3,6 @@ package com.edgetag.repository
 import android.app.Activity
 import android.content.pm.PackageManager
 import com.edgetag.DependencyInjectorImpl
-import com.edgetag.data.database.EventDatabaseService
-import com.edgetag.data.database.entity.EventEntity
 import com.edgetag.deviceinfo.device.DeviceInfo
 import com.edgetag.model.ErrorCodes
 import com.edgetag.model.InternalError
@@ -21,8 +19,6 @@ import com.google.gson.Gson
 import retrofit2.Call
 
 
-
-
 class EventRepository(private var secureStorage: SharedPreferenceSecureVault) {
 
     companion object {
@@ -30,7 +26,7 @@ class EventRepository(private var secureStorage: SharedPreferenceSecureVault) {
         private var globalData = hashMapOf<String,String>()
     }
 
-    lateinit var visibleActivity: Activity
+    var pageUrl = ""
 
     fun prepareTagEvent(
         tagName: String,
@@ -85,20 +81,16 @@ class EventRepository(private var secureStorage: SharedPreferenceSecureVault) {
             storage.kv = globalData
             tagMetadata.storage = storage
             tagMetadata.consentString = getConsentInfo()
-            tagMetadata.tag_user_id = DependencyInjectorImpl.getInstance().getSecureStorageService()
-                .fetchString(Constant.TAG_USER_ID)
 
             tagMetadata.providers = providerInfo
-            if (this::visibleActivity.isInitialized) {
-                tagMetadata.pageUrl =
-                    visibleActivity.localClassName.substringAfterLast(delimiter = '.')
-            }
+            tagMetadata.pageUrl =DependencyInjectorImpl.getInstance().pageUrl
             val context = DependencyInjectorImpl.getInstance().getApplication()
             tagMetadata.userAgent = DeviceInfo(context).userAgent
             tagMetadata.eventName = tagName
             tagMetadata.data = tagInfo
             tagMetadata.eventId = DateTimeUtils().generateEventId(tagName)
             tagMetadata.timestamp = System.currentTimeMillis().toString()
+            tagMetadata.providerData = tagInfo
             publishEvents(tagMetadata)
         } catch (e: Exception) {
             //Log.e(TAG, e.localizedMessage!!)
@@ -126,14 +118,8 @@ class EventRepository(private var secureStorage: SharedPreferenceSecureVault) {
             storage.data = getRefferalData()
             storage.kv = globalData
             consentMetadata.storage = storage
-            consentMetadata.tag_user_id =
-                DependencyInjectorImpl.getInstance().getSecureStorageService()
-                    .fetchString(Constant.TAG_USER_ID)
             consentMetadata.consentString = consentInfo
-            if (this::visibleActivity.isInitialized) {
-                consentMetadata.pageUrl =
-                    visibleActivity.localClassName.substringAfterLast(delimiter = '.')
-            }
+            consentMetadata.pageUrl =DependencyInjectorImpl.getInstance().pageUrl
             val context = DependencyInjectorImpl.getInstance().getApplication()
             consentMetadata.userAgent = DeviceInfo(context).userAgent
             publishConsentEvents(consentMetadata)
@@ -168,14 +154,8 @@ class EventRepository(private var secureStorage: SharedPreferenceSecureVault) {
             storage.data = getRefferalData()
             storage.kv= globalData
             consentMetadata.storage = storage
-            consentMetadata.tag_user_id =
-                DependencyInjectorImpl.getInstance().getSecureStorageService()
-                    .fetchString(Constant.TAG_USER_ID)
             consentMetadata.consentString = edgeTag.consent
-            if (this::visibleActivity.isInitialized) {
-                consentMetadata.pageUrl =
-                    visibleActivity.localClassName.substringAfterLast(delimiter = '.')
-            }
+            consentMetadata.pageUrl = DependencyInjectorImpl.getInstance().pageUrl
             val context = DependencyInjectorImpl.getInstance().getApplication()
             consentMetadata.userAgent = DeviceInfo(context).userAgent
             publishUserEvents(consentMetadata)
@@ -202,58 +182,46 @@ class EventRepository(private var secureStorage: SharedPreferenceSecureVault) {
 
     private fun getRefferalData(): HashMap<String, HashMap<String, String>> {
         val refferalToPush = hashMapOf<String, HashMap<String, String>>()
-        val refferals = DependencyInjectorImpl.getInstance().getSecureStorageService()
-            .fetchString(Constant.REFFERAL)
-        var refferalInLocalStorage = hashMapOf<Any, Any>()
-        if (!refferals.isNullOrEmpty()) {
-            refferalInLocalStorage =
-                Gson().fromJson(refferals, HashMap::class.java) as HashMap<Any, Any>
-        }
-        val manifestConfigurationResponse = DependencyInjectorImpl.getInstance()
-            .getManifestRepository().manifestConfigurationResponse
-        val refferalEvents = hashMapOf<String, String>()
-        refferalInLocalStorage.put(
-            "advertiserId",
-            DependencyInjectorImpl.getInstance().getSecureStorageService()
-                .fetchString(Constant.AD_ID)
-        )
-        DependencyInjectorImpl.getInstance().mReferrerDetails?.let {
+        try {
+            val refferals = DependencyInjectorImpl.getInstance().getSecureStorageService()
+                .fetchString(Constant.REFFERAL)
+            var refferalInLocalStorage = hashMapOf<Any, Any>()
+            if (!refferals.isNullOrEmpty()) {
+                refferalInLocalStorage =
+                    Gson().fromJson(refferals, HashMap::class.java) as HashMap<Any, Any>
+            }
+            val manifestConfigurationResponse = DependencyInjectorImpl.getInstance()
+                .getManifestRepository().manifestConfigurationResponse
+            val refferalEvents = hashMapOf<String, String>()
             refferalInLocalStorage.put(
-                "referral",
-                it.installReferrer
+                "advertiserId",
+                DependencyInjectorImpl.getInstance().getSecureStorageService()
+                    .fetchString(Constant.AD_ID)
             )
-        }
+            DependencyInjectorImpl.getInstance().mReferrerDetails?.let {
+                refferalInLocalStorage.put(
+                    "referral",
+                    it.installReferrer
+                )
+            }
 
-        for (result in manifestConfigurationResponse.result!!) {
-            for (captureRule in result?.rules?.capture!!) {
-                if (refferalInLocalStorage.containsKey(captureRule.key!!)) {
-                    refferalEvents.put(
-                        captureRule.key!!,
-                        refferalInLocalStorage.get(captureRule.key!!).toString()
-                    )
-                    refferalToPush.put(result._package!!, refferalEvents)
+            for (result in manifestConfigurationResponse.result!!) {
+                for (captureRule in result?.rules?.capture!!) {
+                    if (refferalInLocalStorage.containsKey(captureRule.key!!)) {
+                        refferalEvents.put(
+                            captureRule.key!!,
+                            refferalInLocalStorage.get(captureRule.key!!).toString()
+                        )
+                        refferalToPush.put(result._package!!, refferalEvents)
 
+                    }
                 }
             }
+        }catch (_:Exception){
+
         }
         return refferalToPush
     }
-
-
-    /*private fun pushEvents(event: EdgetagMetaData): Result<String> {
-        return try {
-            val eventEntity = EventEntity(Gson().toJson(event))
-            EventDatabaseService().insertEvent(eventEntity)
-            Result.Success("")
-        } catch (e: Exception) {
-            Result.Error(
-                InternalError(
-                    code = ErrorCodes.ERROR_CODE_SDK_INTERNAL_ERROR,
-                    msg = e.localizedMessage ?: ""
-                )
-            )
-        }
-    }*/
 
     private fun publishEvents(event: EdgetagMetaData): Result<String> {
         DependencyInjectorImpl.getInstance().getConfigurationManager()
@@ -324,8 +292,6 @@ class EventRepository(private var secureStorage: SharedPreferenceSecureVault) {
         storage.kv= globalData
         tagMetadata.storage = storage
         tagMetadata.data = data as HashMap<String, Any>
-        tagMetadata.tag_user_id = DependencyInjectorImpl.getInstance().getSecureStorageService()
-            .fetchString(Constant.TAG_USER_ID)
 
         DependencyInjectorImpl.getInstance().getConfigurationManager()
             .publishDataEvents(tagMetadata, object : ApiDataProvider<Any?>() {
@@ -375,7 +341,7 @@ class EventRepository(private var secureStorage: SharedPreferenceSecureVault) {
                 override fun onSuccess(data: Any?) {
 
                     try {
-                        val values = Gson().toJsonTree(data).getAsJsonObject().getAsJsonObject("result")
+                        val values = Gson().toJsonTree(data).asJsonObject.getAsJsonObject("result")
                         val retMap = Gson().fromJson<HashMap<String, String>>(
                             values.toString(),
                             HashMap::class.java
@@ -406,7 +372,7 @@ class EventRepository(private var secureStorage: SharedPreferenceSecureVault) {
 
                 override fun onSuccess(data: Any?) {
                     try {
-                        val values = Gson().toJsonTree(data).getAsJsonObject().getAsJsonArray("result");
+                        val values = Gson().toJsonTree(data).asJsonObject.getAsJsonArray("result")
 
                         val retMap = Gson().fromJson<ArrayList<String>>(
                             values.toString(),

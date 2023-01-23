@@ -23,6 +23,7 @@ class DependencyInjectorImpl private constructor(
     eventDatabase: EventDatabase) : DependencyInjector {
 
     var mReferrerDetails: ReferrerDetails? = null
+    var pageUrl:String =""
 
     companion object {
         private const val TAG ="DependencyInjectorImpl"

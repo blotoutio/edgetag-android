@@ -194,7 +194,7 @@ public class AprioriFrequentItemsetGenerator<I> {
 
         for (Set<I> itemset : itemsetList) {
             List<I> l = new ArrayList<>(itemset);
-            Collections.<I>sort(l, ITEM_COMPARATOR);
+            Collections.sort(l, ITEM_COMPARATOR);
             list.add(l);
         }
 
